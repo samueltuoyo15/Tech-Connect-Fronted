@@ -121,7 +121,7 @@ const SignUp = () => {
 					<div onClick={() => window.location.href = "http://localhost:5000/api/auth/google"}>
 						<button className="flex justify-start gap-10 btn btn-block btn-md cursor-pointer border border-slate-700">
 							 <img className="w-6 rounded-full" src="/g_logo.png" alt="" />
-							  Signup with Google</button>
+							  Continue with Google</button>
 					</div>
 
 					<Link
