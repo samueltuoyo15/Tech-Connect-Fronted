@@ -1,9 +1,8 @@
-import { Link, useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 import GenderCheckbox from "../components/GenderCheckbox";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 
 const SignUp = () => {
-  const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     fullname: "",
@@ -37,7 +36,7 @@ const SignUp = () => {
     const data = await response.json()
     console.log("data")
    if(response.ok){
-     navigate("/login")
+     window.location.href = "/login"
    } else{
      console.error("error")
      setError(data?.message || "Something went wrong")

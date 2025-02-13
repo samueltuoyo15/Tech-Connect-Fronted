@@ -14,7 +14,7 @@ type AuthUserType = {
     joined: Date;
 }
 
-const AuthContext = createContext<{
+export const AuthContext = createContext<{
     authUser: AuthUserType| null;
     setAuthUser: Dispatch<SetStateAction<AuthUserType | null>>;
     isLoading: boolean

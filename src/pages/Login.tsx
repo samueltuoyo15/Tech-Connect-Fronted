@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import {setAuthUser authUser} from "../context/AuthContext";
+import {useState} from "react";
+
 const Login = () => {
-  const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     email: "",
@@ -25,12 +25,15 @@ const Login = () => {
     try{
     const response = await fetch("http://localhost:5000/api/auth/signin", {
       method: "POST",
+      credentials: "include",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(formData)
     });
     
+    const data = await response.json()
+    console.log(data.message)
    if(response.ok){
-     navigate("/")
+     window.location.href = "/"
    } else{
      console.error("error")
      setError(data?.message || "Something went wrong")
@@ -47,8 +50,8 @@ const Login = () => {
 					<span className="text-blue-500"> Tech Connect</span>
 				</h1>
 				<p className="text-center">Hello, Welcome Back!👋</p>
-
-				<form>
+        {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
+				<form onSubmit={handleSubmit}>
 					<div>
 						<label className="label p-2">
 							<span className="text-base label-text">Email</span>
@@ -68,7 +71,7 @@ const Login = () => {
 						<input
 							type="password"
 							placeholder="Enter Password"
-							name="fullname"
+							name="password"
 					  	value={formData.password}
 				   		onChange={handleChange}
 							className="w-full input input-bordered h-12"
