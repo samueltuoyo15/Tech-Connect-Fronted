@@ -14,7 +14,7 @@ const GenderCheckbox: React.FC<GenderCheckboxProps> = ({gender, setGender}) => {
 					value="male"
 					checked={gender === "male"}
 					onChange={(e) => setGender(e.target.value)}
-					className='radio border-slate-900' />
+					className='cursor-pointer radio border-slate-900' />
 				</label>
 			</div>
 			<div className='form-control'>
@@ -25,7 +25,7 @@ const GenderCheckbox: React.FC<GenderCheckboxProps> = ({gender, setGender}) => {
 					value="female"
 					checked={gender === "female"}
 					onChange={(e) => setGender(e.target.value)}
-					className='radio border-slate-900' />
+					className='cursor-pointer radio border-slate-900' />
 				</label>
 			</div>
 		</div>

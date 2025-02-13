@@ -97,15 +97,15 @@ const Login = () => {
 					 <hr  className="w-[50%] border border-blue-500"/>
 					</div>
 
-					<div>
-						<button className=" flex justify-start gap-10 btn btn-block btn-md mb-6 border border-slate-700 ">
+					<div onClick={() => window.location.href = "http://localhost:5000/api/auth/google"}>
+						<button className="cursor-pointer flex justify-start gap-10 btn btn-block btn-md mb-6 border border-slate-700 ">
 							 <img className="w-6 rounded-full" src="/g_logo.png" alt="" />
 							  Signup with Google</button>
 					</div>
 
 					<Link
 						to="/signup"
-						className="flex justify-center text-sm  hover:underline text-white hover:text-blue-600 mt-2 text-center"
+						className="flex cursor-pointer justify-center text-sm  hover:underline text-white hover:text-blue-600 mt-2 text-center"
 					>
 						{"Dont have an account?"}
 					</Link>
