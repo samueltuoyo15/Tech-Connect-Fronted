@@ -1,9 +1,51 @@
-import { Link } from "react-router-dom";
-// import GenderCheckbox from "../components/GenderCheckbox";
-// import GenderCheckbox from "../components/GenderCheckbox";
-import gogle_logo from '../../public/g_logo.png'
+import { Link, useNavigate} from "react-router-dom";
+import GenderCheckbox from "../components/GenderCheckbox";
+import {useState, useEffect} from "react";
 
 const SignUp = () => {
+  const navigate = useNavigate()
+  const [error, setError] = useState<string | null>(null)
+  const [formData, setFormData] = useState({
+    fullname: "",
+    username: "",
+    email: "",
+    password: "",
+    gender: "Prefer not to say",
+  })
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>  {
+    const {name, value} = e.target;
+    setFormData((prev) => ({...prev, [name]: value}));
+  }
+  
+  // submit the  form 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if(!formData.fullname || !formData.username || !formData.email || !formData.password || !formData.gender){
+      setError("Please fill in all fields");
+      return;
+    }
+    
+    try{
+    const response = await fetch("http://localhost:5000/api/auth/signup", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(formData)
+    });
+    
+    const data = await response.json()
+    console.log("data")
+   if(response.ok){
+     navigate("/login")
+   } else{
+     console.error("error")
+     setError(data?.message || "Something went wrong")
+   }
+  } catch(error: any){
+    console.error("Failed to signup", error)
+  }
+  }
 	return (
 		<div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
 			<div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
@@ -11,29 +53,41 @@ const SignUp = () => {
 					Sign Up <span className='text-blue-500'> Tech Connect</span>
 				</h1>
 				<p className="text-sm mt-2 text-center mb-2"> Connect with your friends today 👋!</p>
-
-				<form>
-					{/* <div>
+       {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
+				<form onSubmit={handleSubmit}>
+					 <div>
 						<label className='label p-2'>
 							<span className='text-base label-text'>Full Name</span>
 						</label>
-						<input type='text' placeholder='John Doe' className='w-full input input-bordered  h-10' />
-					</div> */}
+						<input type='text'
+						placeholder='John Doe'
+						name="fullname"
+						value={formData.fullname}
+						onChange={handleChange}
+						className='w-full input input-bordered h-10' />
+					</div> 
 
 					<div>
 						<label className='label p-2 '>
 							<span className='text-base label-text'>Username</span>
 						</label>
-						<input type='text' placeholder='johndoe' className='w-full input input-bordered h-12' />
+						<input type='text' 
+						name="username"
+						value={formData.username}
+						onChange={handleChange}
+						placeholder='johndoe' 
+						className='w-full input input-bordered h-12' />
 					</div>
 
 					<div>
 						<label className='label'>
 							<span className='text-base label-text'>Email</span>
 						</label>
-						<input
-							type='password'
+						<input type='email'
+				   		name="email"
 							placeholder='Enter Your Email'
+							value={formData.email}
+				  		onChange={handleChange}
 							className='w-full input input-bordered h-12'
 						/>
 					</div>
@@ -44,15 +98,19 @@ const SignUp = () => {
 						</label>
 						<input
 							type='password'
+							name="password"
 							placeholder='Enter Password'
+							value={formData.password}
+					  	onChange={handleChange}
 							className='w-full input input-bordered h-12'
 						/>
 					</div>
 
 					{/* <GenderCheckbox />  */}			
-
+          <GenderCheckbox gender={formData.gender} 
+           setGender={(value) => setFormData((prev) => ({...prev, gender: value}))}/>
 					<div>
-						<button className='btn btn-block btn-md mt-6 border border-slate-700'>Sign Up</button>
+						<button type="submit" className='btn btn-block btn-md mt-6 border border-slate-700'>Sign Up</button>
 					</div>
 
 					<div className="flex justify-center my-6 items-center whitespace-nowrap">
@@ -62,13 +120,11 @@ const SignUp = () => {
 					</div>
 
 					<div>
-						<button className=' flex justify-start gap-10 btn btn-block btn-md  border border-slate-700 '>
-							 <img className="w-6 rounded-full" src={gogle_logo} alt="" />
+						<button className="flex justify-start gap-10 btn btn-block btn-md  border border-slate-700">
+							 <img className="w-6 rounded-full" src="/g_logo.png" alt="" />
 							  Signup with Google</button>
 					</div>
 
-				
-			
 					<Link
 						to={"/login"}
 						className='flex justify-center mt-6 text-sm hover:underline hover:text-blue-600   text-white'
