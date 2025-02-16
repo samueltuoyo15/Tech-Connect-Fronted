@@ -29,7 +29,7 @@ const SignUp = () => {
     }
     
     try{
-    const response = await fetch("http://localhost:5000/api/auth/signup", {
+    const response = await fetch("https://tech-connect-backend-vrz5.onrender.com/api/auth/signup", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(formData)
@@ -123,7 +123,7 @@ const SignUp = () => {
 					 <hr  className="w-[50%] border border-blue-500"/>
 					</div>
 
-					<div onClick={() => window.location.href = "http://localhost:5000/api/auth/google"}>
+					<div onClick={() => window.location.href = "https://tech-connect-backend-vrz5.onrender.com/api/auth/google"}>
 						<button className="flex justify-start gap-10 btn btn-block btn-md cursor-pointer border border-slate-700">
 							 <img className="w-6 rounded-full" src="/g_logo.png" alt="" />
 							  Continue with Google</button>

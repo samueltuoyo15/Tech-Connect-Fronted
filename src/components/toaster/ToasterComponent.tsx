@@ -1,9 +1,8 @@
 import {Toaster} from "sonner"
 export const ToasterComponent = () => {
   return(
+    <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
     <Toaster 
-  position="top-center"
-  theme="light"
   toastOptions={{
     style: {
       background: "#1E293B", 
@@ -25,6 +24,6 @@ export const ToasterComponent = () => {
       },
     },
   }}
-/>
+/></div>
     )
 }
